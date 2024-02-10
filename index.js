@@ -8,6 +8,8 @@ const handleConnectToDatabase =  require("./src/db/connection.db");
 
 const PORT = process.env.PORT || 3001;
 
+app.use(express.json());
+
 handleConnectToDatabase(process.env.MONGODB_URL).then(()=>{
  console.log("Connected to MongoDB successfully");
 })
