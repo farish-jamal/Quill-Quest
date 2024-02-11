@@ -28,13 +28,13 @@ const blogSchema = mongoose.Schema({
  },
  totalViews:{
   type: Number,
-  required: true
+  required: true,
+  default: 0
  },
  createdAt: {
   type: String,
-  default: Date.now()
+  default: Date.now().toString()
  }
-
 });
 
 const Blogs = mongoose.model("Blogs", blogSchema);

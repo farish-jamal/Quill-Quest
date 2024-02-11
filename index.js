@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 
 const userRoute = require("./src/routes/v1/user.routes");
+const blogRoute = require("./src/routes/v1/blogs.routes");
 
 const handleConnectToDatabase =  require("./src/db/connection.db");
 
@@ -15,6 +16,7 @@ handleConnectToDatabase(process.env.MONGODB_URL).then(()=>{
 })
 
 app.use("/user", userRoute);
+app.use("/blog", blogRoute);
 
 app.listen(PORT, ()=>{
  console.log(`Server running on Port ${PORT}`);
