@@ -13,7 +13,7 @@ async function handleCreateUser(req, res) {
       password: hashedPassword,
       description,
     });
-    res.status(201).json(user);
+    return res.status(201).json(user);
   } catch (error) {
     console.error("Error creating user:", error);
     return res.status(500).json({ error: "Internal Server Error" });
