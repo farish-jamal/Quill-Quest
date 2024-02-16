@@ -1,5 +1,6 @@
 const Users = require("../../models/user.models");
 const bcrypt = require("bcryptjs");
+const { setUser } = require("../../utils/auth.utils");
 const salt = bcrypt.genSaltSync(10);
 
 async function handleCreateUser(req, res) {
@@ -13,7 +14,8 @@ async function handleCreateUser(req, res) {
       password: hashedPassword,
       description,
     });
-    return res.status(201).json(user);
+    const sessionId = setUser(user);
+    return res.status(200).json({ user, sessionId });
   } catch (error) {
     console.error("Error creating user:", error);
     return res.status(500).json({ error: "Internal Server Error" });
@@ -28,7 +30,8 @@ async function handleUserToLoginUser(req, res) {
     const passwordMatched = bcrypt.compareSync(password, user.password);
     if (!passwordMatched)
       return res.status(401).json({ msg: "Wrong Credentials" });
-    return res.status(200).json(user);
+    const sessionId = setUser(user);
+    return res.status(200).json({ user, sessionId });
   } catch (error) {
     console.error("Error creating user:", error);
     return res.status(500).json({ error: "Internal Server Error" });
