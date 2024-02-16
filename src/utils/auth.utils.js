@@ -14,9 +14,9 @@ function setUser(user) {
   );
 }
 
-function getUser(user) {
-  if (!token) return null;
-  return jwt.verify(token, secretID);
+function getUser(accessToken) {
+  if (!accessToken) return null;
+  return jwt.verify(accessToken, secretID);
 }
 
 module.exports = {

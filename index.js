@@ -6,6 +6,7 @@ require("dotenv").config();
 const userRoute = require("./src/routes/v1/user.routes");
 const blogRoute = require("./src/routes/v1/blogs.routes");
 const commentRoute = require("./src/routes/v1/comment.routes");
+const getUserRoute = require("./src/routes/v1/getUser.routes");
 
 const handleConnectToDatabase = require("./src/db/connection.db");
 
@@ -25,6 +26,7 @@ handleConnectToDatabase(process.env.MONGODB_URL).then(() => {
 app.use("/user", userRoute);
 app.use("/blog", blogRoute);
 app.use("/comment", commentRoute);
+app.use("/getUser", getUserRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on Port ${PORT}`);
