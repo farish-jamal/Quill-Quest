@@ -10,6 +10,8 @@ function setUser(user) {
       username: user.username,
       role: user.role,
       profilePicture: user.profilePicture,
+      description: user.description,
+      createdAt: user.createdAt,
     },
     secretID
   );
