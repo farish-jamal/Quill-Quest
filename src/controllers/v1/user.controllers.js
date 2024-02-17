@@ -5,14 +5,14 @@ const salt = bcrypt.genSaltSync(10);
 
 async function handleCreateUser(req, res) {
   try {
-    const { username, email, password, profilePicture, description } = req.body;
+    const { username, email, password, description } = req.body;
     const hashedPassword = bcrypt.hashSync(password, salt);
     const user = await Users.create({
       username,
       email,
-      profilePicture,
       password: hashedPassword,
       description,
+      profilePicture: req.file.filename,
     });
     const sessionId = setUser(user);
     return res.status(200).json({ user, sessionId });

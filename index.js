@@ -18,6 +18,7 @@ app.use(
     origin: "http://localhost:5173",
   })
 );
+app.use(express.static("uploads"));
 
 handleConnectToDatabase(process.env.MONGODB_URL).then(() => {
   console.log("Connected to MongoDB successfully");

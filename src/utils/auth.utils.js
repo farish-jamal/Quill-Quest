@@ -9,6 +9,7 @@ function setUser(user) {
       email: user.email,
       username: user.username,
       role: user.role,
+      profilePicture: user.profilePicture,
     },
     secretID
   );

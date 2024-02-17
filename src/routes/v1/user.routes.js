@@ -1,11 +1,15 @@
 const express = require("express");
+const multer = require("multer");
 const {
   handleCreateUser,
   handleUserToLoginUser,
 } = require("../../controllers/v1/user.controllers");
+const { storage } = require("../../services/multer.service");
 const route = express.Router();
 
-route.post("/register", handleCreateUser);
+const upload = multer({ storage: storage });
+
+route.post("/register", upload.single("profilePicture"), handleCreateUser);
 route.post("/login", handleUserToLoginUser);
 
 module.exports = route;
