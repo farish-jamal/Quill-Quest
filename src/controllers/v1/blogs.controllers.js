@@ -1,14 +1,14 @@
 const Blogs = require("../../models/blogs.models");
 
 async function handleCreateBlogs(req, res) {
- const {title, content, category, bannerImage, author} = req.body;
+  const { title, description, category, author } = req.body;
   try {
     const blog = await Blogs.create({
       title,
-      content,
+      content: description,
       category,
       author,
-      bannerImage,
+      bannerImage: req.file.filename,
     });
     return res.status(201).json(blog);
   } catch (error) {
