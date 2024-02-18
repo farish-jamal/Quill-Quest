@@ -17,6 +17,17 @@ async function handleCreateBlogs(req, res) {
   }
 }
 
+async function handleGetAllBlogs(req, res) {
+  try {
+    const result = await Blogs.find({});
+    return res.status(201).json(result);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   handleCreateBlogs,
+  handleGetAllBlogs,
 };
