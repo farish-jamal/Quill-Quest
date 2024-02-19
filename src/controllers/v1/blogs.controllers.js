@@ -45,8 +45,20 @@ async function getSpecificBlog(req, res) {
   }
 }
 
+async function getSpecificUserBlog(req, res) {
+  const id = req.params.id;
+  try {
+    const result = await Blogs.find({ author: id });
+    return res.status(200).json({ result });
+  } catch (error) {
+    console.error("Error while finding blog", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   handleCreateBlogs,
   handleGetAllBlogs,
   getSpecificBlog,
+  getSpecificUserBlog,
 };
