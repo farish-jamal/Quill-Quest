@@ -35,7 +35,7 @@ async function getSpecificBlog(req, res) {
   try {
     const result = await Blogs.findOneAndUpdate(
       { _id: id },
-      { $inc: { totalViews: 1 / 2 } },
+      { $inc: { totalViews: 1 } },
       { new: true }
     );
     return res.status(200).json({ result });
