@@ -56,9 +56,29 @@ async function getSpecificUserBlog(req, res) {
   }
 }
 
+async function handleUpdateBlog(req, res) {
+  const id = req.params.id;
+  const { title, content, category } = req.body;
+  try {
+    const updateFields = {};
+    if (title) updateFields.title = title;
+    if (content) updateFields.content = content;
+    if (category) updateFields.category = category;
+    if (req.file) updateFields.bannerImage = req.file.filename;
+    const result = await Blogs.findOneAndUpdate({ _id: id }, updateFields, {
+      new: true,
+    });
+    return res.status(200).json({ result });
+  } catch (error) {
+    console.error("Error while finding blog", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   handleCreateBlogs,
   handleGetAllBlogs,
   getSpecificBlog,
   getSpecificUserBlog,
+  handleUpdateBlog,
 };
