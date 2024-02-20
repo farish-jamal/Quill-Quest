@@ -7,6 +7,7 @@ const {
   getSpecificBlog,
   getSpecificUserBlog,
   handleUpdateBlog,
+  handleDeleteBlog,
 } = require("../../controllers/v1/blogs.controllers");
 
 const route = express.Router();
@@ -17,5 +18,6 @@ route.get("/", handleGetAllBlogs);
 route.get("/:id", getSpecificBlog);
 route.get("/user/:id", getSpecificUserBlog);
 route.post("/:id", upload.single("bannerImage"), handleUpdateBlog);
+route.get("/delete/:id", handleDeleteBlog);
 
 module.exports = route;
