@@ -27,8 +27,7 @@ const blogSchema = mongoose.Schema({
   bannerImage: {
     type: String,
     required: true,
-    default:
-      "https://media.istockphoto.com/id/1147544810/vector/no-thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=2-ScbybM7bUYw-nptQXyKKjwRHKQZ9fEIwoWmZG9Zyg=",
+    default: "1708515810222 - no-image.jpg",
   },
   readTime: {
     type: String,

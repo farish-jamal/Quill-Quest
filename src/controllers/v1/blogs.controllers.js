@@ -5,14 +5,14 @@ async function handleCreateBlogs(req, res) {
   const { title, description, category, author } = req.body;
   const readTime = getReadTime(category);
   try {
-    const blog = await Blogs.create({
-      title,
-      content: description,
-      category,
-      author,
-      readTime,
-      bannerImage: req.file.filename,
-    });
+    const updateFields = {};
+    if (title) updateFields.title = title;
+    if (description) updateFields.content = description;
+    if (category) updateFields.category = category;
+    if (req.file) updateFields.bannerImage = req.file.filename;
+    updateFields.author = author;
+    updateFields.readTime = readTime;
+    const blog = await Blogs.create(updateFields);
     return res.status(201).json(blog);
   } catch (error) {
     console.error("Error creating user:", error);
