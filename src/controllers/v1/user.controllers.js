@@ -49,8 +49,28 @@ async function handleGetSpecificUser(req, res) {
   }
 }
 
+async function handleEditUserDetails(req, res) {
+  const id = req.params.id;
+  const { username, email, description } = req.body;
+  const updateFields = {};
+  if (username) updateFields.username = username;
+  if (email) updateFields.email = email;
+  if (description) updateFields.description = description;
+  if (req.file) updateFields.profilePicture = req.file.filename;
+  try {
+    const user = await Users.findOneAndUpdate({ _id: id }, updateFields, {
+      new: true,
+    });
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("Error finding user:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   handleCreateUser,
   handleUserToLoginUser,
   handleGetSpecificUser,
+  handleEditUserDetails,
 };
