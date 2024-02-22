@@ -14,6 +14,6 @@ const upload = multer({ storage: storage });
 route.post("/register", upload.single("profilePicture"), handleCreateUser);
 route.post("/login", handleUserToLoginUser);
 route.get("/:id", handleGetSpecificUser);
-route.get("/edit/:id", upload.single("profilePicture"), handleEditUserDetails);
+route.post("/edit/:id", upload.single("profilePicture"), handleEditUserDetails);
 
 module.exports = route;
