@@ -61,7 +61,8 @@ async function handleEditUserDetails(req, res) {
     const user = await Users.findOneAndUpdate({ _id: id }, updateFields, {
       new: true,
     });
-    return res.status(200).json(user);
+    const sessionId = setUser(user);
+    return res.status(200).json({ user, sessionId });
   } catch (error) {
     console.error("Error finding user:", error);
     return res.status(500).json({ error: "Internal Server Error" });
