@@ -18,16 +18,20 @@ const blogSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comments",
-    },
-  ],
   bannerImage: {
     type: String,
     required: true,
     default: "1708515810222 - no-image.jpg",
+  },
+  likes: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  dislikes: {
+    type: Number,
+    required: true,
+    default: 0,
   },
   readTime: {
     type: String,
