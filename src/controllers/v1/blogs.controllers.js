@@ -3,7 +3,7 @@ const Blogs = require("../../models/blogs.models");
 
 async function handleCreateBlogs(req, res) {
   const { title, description, category, author } = req.body;
-  const readTime = getReadTime(category);
+  const readTime = getReadTime(description);
   try {
     const updateFields = {};
     if (title) updateFields.title = title;
@@ -86,6 +86,36 @@ async function handleDeleteBlog(req, res) {
   }
 }
 
+async function handleLikesOfSpecificPost(req, res) {
+  const id = req.params.id;
+  try {
+    const result = await Blogs.findOneAndUpdate(
+      { _id: id },
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    return res.status(200).json({ result });
+  } catch (error) {
+    console.error("Error while finding blog", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+async function handleDisLikesOfSpecificPost(req, res) {
+  const id = req.params.id;
+  try {
+    const result = await Blogs.findOneAndUpdate(
+      { _id: id },
+      { $inc: { dislikes: 1 } },
+      { new: true }
+    );
+    return res.status(200).json({ result });
+  } catch (error) {
+    console.error("Error while finding blog", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   handleCreateBlogs,
   handleGetAllBlogs,
@@ -93,4 +123,6 @@ module.exports = {
   getSpecificUserBlog,
   handleUpdateBlog,
   handleDeleteBlog,
+  handleLikesOfSpecificPost,
+  handleDisLikesOfSpecificPost,
 };
