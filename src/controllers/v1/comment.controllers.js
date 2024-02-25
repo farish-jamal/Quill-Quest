@@ -1,19 +1,21 @@
-const Comments = require("../../models/comments.models")
+const Comments = require("../../models/comments.models");
 
-async function handleCreateComment(req, res){
- try {
-  const {author, content} = req.body;
-  const comment = await Comments.create({
-   author,
-   content
-  })
-  return res.status(201).json(comment);
- } catch (error) {
-  console.error("Error creating user:", error);
-  return res.status(500).json({ error: "Internal Server Error" });
- }
+async function handleCreateComment(req, res) {
+  const id = req.params.id;
+  try {
+    const { user, comment } = req.body;
+    const result = await Comments.create({
+      author: user,
+      post: id,
+      content: comment,
+    });
+    return res.status(201).json(result);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 }
 
 module.exports = {
- handleCreateComment
-}
+  handleCreateComment,
+};
