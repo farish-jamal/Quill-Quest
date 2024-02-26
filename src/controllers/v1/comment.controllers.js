@@ -21,7 +21,6 @@ async function getCommentOfSpecificPost(req, res) {
   const id = req.params.id;
   try {
     const result = await Comments.find({ post: id });
-    console.log(result);
     return res.status(201).json(result);
   } catch (error) {
     console.error("Error creating user:", error);

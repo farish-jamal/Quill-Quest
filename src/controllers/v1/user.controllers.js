@@ -41,8 +41,11 @@ async function handleUserToLoginUser(req, res) {
 async function handleGetSpecificUser(req, res) {
   const id = req.params.id;
   try {
-    const user = await Users.findOne({ _id: id });
-    return res.status(200).json(user.username);
+    const user = await Users.findOne(
+      { _id: id },
+      { username: 1, _id: 1, profilePicture: 1 }
+    );
+    return res.status(200).json(user);
   } catch (error) {
     console.error("Error finding user:", error);
     return res.status(500).json({ error: "Internal Server Error" });
