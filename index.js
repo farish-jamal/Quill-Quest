@@ -32,4 +32,3 @@ app.use("/getUser", getUserRoute);
 app.listen(PORT, () => {
   console.log(`Server running on Port ${PORT}`);
 });
-5173;

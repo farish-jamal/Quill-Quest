@@ -116,6 +116,19 @@ async function handleDisLikesOfSpecificPost(req, res) {
   }
 }
 
+async function handlepagination(req, res) {
+  const page = req.query.page || 1;
+  const limit = 3;
+  const skip = (page - 1) * limit;
+  try {
+    const result = await Blogs.find({}).skip(skip).limit(limit);
+    return res.status(200).json({ result });
+  } catch (error) {
+    console.error("Error while finding blog", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   handleCreateBlogs,
   handleGetAllBlogs,
@@ -125,4 +138,5 @@ module.exports = {
   handleDeleteBlog,
   handleLikesOfSpecificPost,
   handleDisLikesOfSpecificPost,
+  handlepagination,
 };

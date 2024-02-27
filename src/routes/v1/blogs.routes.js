@@ -10,6 +10,7 @@ const {
   handleDeleteBlog,
   handleLikesOfSpecificPost,
   handleDisLikesOfSpecificPost,
+  handlepagination,
 } = require("../../controllers/v1/blogs.controllers");
 
 const route = express.Router();
@@ -17,6 +18,7 @@ const upload = multer({ storage: storage });
 
 route.post("/create", upload.single("bannerImage"), handleCreateBlogs);
 route.get("/", handleGetAllBlogs);
+route.get("/pagination", handlepagination);
 route.get("/:id", getSpecificBlog);
 route.get("/user/:id", getSpecificUserBlog);
 route.post("/:id", upload.single("bannerImage"), handleUpdateBlog);
