@@ -22,7 +22,7 @@ async function handleCreateBlogs(req, res) {
 
 async function handleGetAllBlogs(req, res) {
   try {
-    const result = await Blogs.find({});
+    const result = await Blogs.countDocuments();
     return res.status(201).json(result);
   } catch (error) {
     console.error("Error creating user:", error);
@@ -122,7 +122,7 @@ async function handlepagination(req, res) {
   const skip = (page - 1) * limit;
   try {
     const result = await Blogs.find({}).skip(skip).limit(limit);
-    return res.status(200).json({ result });
+    return res.status(200).json(result);
   } catch (error) {
     console.error("Error while finding blog", error);
     return res.status(500).json({ error: "Internal Server Error" });
