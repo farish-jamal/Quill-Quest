@@ -35,7 +35,7 @@ async function getSpecificBlog(req, res) {
   try {
     const result = await Blogs.findOneAndUpdate(
       { _id: id },
-      { $inc: { totalViews: 1 } },
+      { $inc: { totalViews: 1 / 2 } },
       { new: true }
     );
     return res.status(200).json({ result });
@@ -118,7 +118,7 @@ async function handleDisLikesOfSpecificPost(req, res) {
 
 async function handlepagination(req, res) {
   const page = req.query.page || 1;
-  const limit = 3;
+  const limit = 6;
   const skip = (page - 1) * limit;
   try {
     const result = await Blogs.find({}).skip(skip).limit(limit);
