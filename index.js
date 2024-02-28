@@ -13,11 +13,7 @@ const handleConnectToDatabase = require("./src/db/connection.db");
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors());
 app.use(express.static("uploads"));
 
 handleConnectToDatabase(process.env.MONGODB_URL).then(() => {
