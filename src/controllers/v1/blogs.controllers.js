@@ -1,15 +1,17 @@
 const { getReadTime } = require("../../helper/getReadTime");
 const Blogs = require("../../models/blogs.models");
+const cloudinary = require("../../services/cloudinary.service");
 
 async function handleCreateBlogs(req, res) {
   const { title, description, category, author } = req.body;
+  const userImageUrl = await cloudinary.uploader.upload(req.file.path);
   const readTime = getReadTime(description);
   try {
     const updateFields = {};
     if (title) updateFields.title = title;
     if (description) updateFields.content = description;
     if (category) updateFields.category = category;
-    if (req.file) updateFields.bannerImage = req.file.filename;
+    if (req.file) updateFields.bannerImage = userImageUrl.secure_url;
     updateFields.author = author;
     updateFields.readTime = readTime;
     const blog = await Blogs.create(updateFields);
@@ -59,12 +61,13 @@ async function getSpecificUserBlog(req, res) {
 async function handleUpdateBlog(req, res) {
   const id = req.params.id;
   const { title, content, category } = req.body;
+  const userImageUrl = await cloudinary.uploader.upload(req.file.path);
   try {
     const updateFields = {};
     if (title) updateFields.title = title;
     if (content) updateFields.content = content;
     if (category) updateFields.category = category;
-    if (req.file) updateFields.bannerImage = req.file.filename;
+    if (req.file) updateFields.bannerImage = userImageUrl.secure_url;
     const result = await Blogs.findOneAndUpdate({ _id: id }, updateFields, {
       new: true,
     });
