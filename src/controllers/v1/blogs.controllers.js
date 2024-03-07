@@ -1,5 +1,6 @@
 const { getReadTime } = require("../../helper/getReadTime");
 const Blogs = require("../../models/blogs.models");
+const Users = require("../../models/user.models");
 const cloudinary = require("../../services/cloudinary.service");
 
 async function handleCreateBlogs(req, res) {
@@ -91,13 +92,22 @@ async function handleDeleteBlog(req, res) {
 
 async function handleLikesOfSpecificPost(req, res) {
   const id = req.params.id;
+  const userId = req.query.userId;
   try {
-    const result = await Blogs.findOneAndUpdate(
-      { _id: id },
-      { $inc: { likes: 1 } },
-      { new: true }
-    );
-    return res.status(200).json({ result });
+    const user = await Users.findById({ _id: userId });
+    if (!user) return res.status(404).json({ message: "User Not Found" });
+    const likedPostIds = user.likedPost.map((postId) => postId.toString());
+    if (!likedPostIds.includes(id)) {
+      await Users.findByIdAndUpdate(userId, { $push: { likedPost: id } });
+      const result = await Blogs.findOneAndUpdate(
+        { _id: id },
+        { $inc: { likes: 1 } },
+        { new: true }
+      );
+      return res.status(200).json({ result });
+    } else {
+      return res.status(200).json({ message: "Alreday Disliked" });
+    }
   } catch (error) {
     console.error("Error while finding blog", error);
     return res.status(500).json({ error: "Internal Server Error" });
@@ -106,13 +116,22 @@ async function handleLikesOfSpecificPost(req, res) {
 
 async function handleDisLikesOfSpecificPost(req, res) {
   const id = req.params.id;
+  const userId = req.query.userId;
   try {
-    const result = await Blogs.findOneAndUpdate(
-      { _id: id },
-      { $inc: { dislikes: 1 } },
-      { new: true }
-    );
-    return res.status(200).json({ result });
+    const user = await Users.findById({ _id: userId });
+    if (!user) return res.status(404).json({ message: "User Not Found" });
+    const likedPostIds = user.likedPost.map((postId) => postId.toString());
+    if (!likedPostIds.includes(id)) {
+      await Users.findByIdAndUpdate(userId, { $push: { likedPost: id } });
+      const result = await Blogs.findOneAndUpdate(
+        { _id: id },
+        { $inc: { dislikes: 1 } },
+        { new: true }
+      );
+      return res.status(200).json({ result });
+    } else {
+      return res.status(200).json({ message: "Alreday Liked" });
+    }
   } catch (error) {
     console.error("Error while finding blog", error);
     return res.status(500).json({ error: "Internal Server Error" });

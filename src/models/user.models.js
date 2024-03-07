@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  likedPost: {
+    type: Array,
+  },
   role: {
     type: String,
     required: true,
